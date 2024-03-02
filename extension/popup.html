@@ -3,12 +3,22 @@
 
 <head>
   <title>Translate Text</title>
+  <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
-  <input type="text" id="textToTranslate" placeholder="Enter text" />
-  <button id="translateBtn">Translate</button>
-  <div id="translationResult"></div>
+  <div id="translatePopupContainer">
+    <div id="translateInputSection">
+      <input type="text" id="textToTranslate" placeholder="Enter text" />
+      <button id="translateBtn">Translate</button>
+    </div>
+    <div id="translateOutputSection">
+      <div id="spinnerContainer" style="display: none;">
+        <div class="spinner"></div>
+      </div>
+      <div id="translationResult"></div>
+    </div>
+  </div>
   <script src="popup.js"></script>
 </body>
 
