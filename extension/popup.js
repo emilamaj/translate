@@ -94,6 +94,9 @@ document.addEventListener('DOMContentLoaded', function () {
       // Do something with the response.data
       console.log("Found response to selection message:", response.data);
       document.getElementById('textToTranslate').value = response.data.trim();
+
+      // Directly perform translation
+      translate();
     });
   });
 });
