@@ -33,8 +33,17 @@ languageTargetText.addEventListener('click', function () {
   languageTargetText.focus();
 });
 
+// Exit focus mode when Enter key is pressed
+languageTargetText.addEventListener('keydown', function (event) {
+  if (event.key === 'Enter') {
+    languageTargetText.blur();
+  }
+});
+
+// Save target language to local storage when focus is lost
 languageTargetText.addEventListener('blur', function () {
   languageTargetText.contentEditable = false;
+  languageTargetText.textContent = languageTargetText.textContent.trim();
   const newLanguage = languageTargetText.textContent;
   localStorage.setItem('targetLanguage', newLanguage);
 });
