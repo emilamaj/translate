@@ -20,6 +20,7 @@
 #translateBtn {
     font-size: 14px;
     padding: 2px;
+    margin-left: 2px;
 }
 
 #translationResult {
