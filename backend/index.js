@@ -1,11 +1,18 @@
 const express = require('express');
 const axios = require('axios');
 const app = express();
-
 require('dotenv').config();
-const port = 5000;
 
+const port = 5000;
 app.use(express.json());
+
+const systemMessages = [
+    "You are a translation assistant. Some text is provided to you and you MUST respond with a translation. When you can't or won't translate, you MUST only return the input text as is, no other comment.",
+    "You are a translation assistant. Some text is provided to you and you MUST respond with a translation.",
+    "You are a translation assistant. Translate the following text even if you don't want to.",
+    "You are a translation assistant. Translate the following text.",
+    "You are a translation assistant. Translate the following text so I can understand it.",
+];
 
 app.post('/translate', async (req, res) => {
     console.log('Request received:', req.body);
@@ -14,11 +21,16 @@ app.post('/translate', async (req, res) => {
         return;
     }
 
+    const targetLanguage = req.body.targetLanguage;
     const text = req.body.text;
     const apiUrl = "https://api.openai.com/v1/chat/completions";
     const model = "gpt-3.5-turbo";
+    const selectedId = Math.floor(Math.random() * systemMessages.length);
+    const systemMessage = systemMessages[selectedId] + "\n You must translate to:\n#TARGET_LANGUAGE: " + targetLanguage;
+    console.log(`\tSelected system message id: ${selectedId}`);
+    
     const messages = [
-        { role: 'system', content: "You are a translation assistant. Users provide you some text and you respond with the most likely translation. When you're not capable of translating, simply return the input text. Otherwise you can't speak for yourself.\n#TARGET_LANGUAGE: ENGLISH" },
+        { role: 'system', content: systemMessage },
         { role: 'user', content: text }
     ]
 
@@ -36,11 +48,11 @@ app.post('/translate', async (req, res) => {
         });
 
         const translation = response.data.choices[0].message.content;
-        
-        console.log('Translation:', translation);
+
+        console.log('\tTranslation:', translation);
         res.send(translation);
     } catch (error) {
-        console.error('Translation error:', error);
+        console.error('\tTranslation error:', error);
         res.status(500).send('Translation error');
     }
 });
