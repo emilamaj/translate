@@ -8,6 +8,37 @@ document.getElementById('textToTranslate').addEventListener('keydown', function 
   }
 });
 
+// Check if target language is stored in local storage
+let targetLanguage = localStorage.getItem('targetLanguage');
+console.log('Target language on open:', targetLanguage);
+
+// If target language is not found in local storage, set it based on system language
+if (!targetLanguage || targetLanguage === 'null' || targetLanguage === 'undefined') {
+  const systemLanguage = navigator.language;
+  console.log('Reading navigator language:', systemLanguage);
+
+  // Store target language in local storage
+  localStorage.setItem('targetLanguage', systemLanguage);
+  targetLanguage = systemLanguage; // Update targetLanguage variable
+  console.log('Target language set:', targetLanguage);
+} else {
+  console.log('Target language found:', targetLanguage);
+}
+
+// Allow user to manually edit target language
+const languageTargetText = document.getElementById('languageTargetText');
+languageTargetText.textContent = targetLanguage;
+languageTargetText.addEventListener('click', function () {
+  languageTargetText.contentEditable = true;
+  languageTargetText.focus();
+});
+
+languageTargetText.addEventListener('blur', function () {
+  languageTargetText.contentEditable = false;
+  const newLanguage = languageTargetText.textContent;
+  localStorage.setItem('targetLanguage', newLanguage);
+});
+
 // Function to handle translation
 function translate() {
   const text = document.getElementById('textToTranslate').value;
@@ -18,6 +49,9 @@ function translate() {
     const spinner = document.getElementById('spinnerContainer');
     spinner.style.display = 'block'; // Show the spinner
 
+    // Read target language from local storage
+    let targetLanguage = localStorage.getItem('targetLanguage');
+
     const translationEndpoint = 'http://localhost:5000/translate';
 
     // Send translation request to server
@@ -26,9 +60,9 @@ function translate() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ 
-        targetLanguage: 'ENGLISH',
-        text: text 
+      body: JSON.stringify({
+        targetLanguage: targetLanguage,
+        text: text
       }),
     })
       .then(response => response.text())
