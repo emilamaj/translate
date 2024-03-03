@@ -77,3 +77,14 @@ function translate() {
       });
   }
 }
+
+// Send message to background script to get the selected text, then set the text input value
+document.addEventListener('DOMContentLoaded', function () {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { method: "getUserSelection" }, function (response) {
+      // Do something with the response.data
+      console.log("Found response to selection message:", response.data);
+      document.getElementById('textToTranslate').value = response.data.trim();
+    });
+  });
+});

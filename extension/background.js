@@ -1,3 +1,11 @@
+// Run the content script
+chrome.action.onClicked.addListener((tab) => {
+  chrome.scripting.executeScript({
+      target: {tabId: tab.id},
+      files: ['content.js']
+  });
+});
+
 // Create a context menu item for translation when the extension is installed
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
