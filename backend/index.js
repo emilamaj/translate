@@ -3,10 +3,18 @@ const axios = require('axios');
 const app = express();
 require('dotenv').config();
 const helmet = require('helmet');
+const rateLimit = require("rate-limiter-multimodal");
 const cors = require('cors');
 
 const port = 5000;
 app.use(helmet());
+app.use(rateLimit({
+    initialCount: 1, // 1 request
+    initialWindow: 1, // per second
+    countFactor: 2, // double the max. requests per window
+    windowFactor: 3, // triple the window size
+    terms: 10, // 10 modes
+}));
 app.use(cors({
     origin: '*',
     methods: 'POST',
