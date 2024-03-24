@@ -2,8 +2,17 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 require('dotenv').config();
+const helmet = require('helmet');
+const cors = require('cors');
 
 const port = 5000;
+app.use(helmet());
+app.use(cors({
+    origin: '*',
+    methods: 'POST',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+}));
 app.use(express.json());
 
 const systemMessages = [
