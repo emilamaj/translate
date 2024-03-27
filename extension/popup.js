@@ -11,24 +11,67 @@ document.getElementById('textToTranslate').addEventListener('keydown', function 
 // Check if target language is stored in local storage
 let targetLanguage = localStorage.getItem('targetLanguage');
 console.log('Target language on open:', targetLanguage);
+// Initialize target language (new)
+function initializeLanguageTarget() {
+  console.log('Initializing target language');
 
-// If target language is not found in local storage, set it based on system language
-if (!targetLanguage || targetLanguage === 'null' || targetLanguage === 'undefined') {
-  const systemLanguage = navigator.language;
-  console.log('Reading navigator language:', systemLanguage);
+  // If target language is not found in local storage, set it based on system language
+  let targetLanguage = localStorage.getItem('targetLanguage');
+  if (!targetLanguage || targetLanguage === 'null' || targetLanguage === 'undefined') {
+    const systemLanguage = navigator.language;
+    console.log('Reading navigator language:', systemLanguage);
 
-  // Store target language in local storage
-  localStorage.setItem('targetLanguage', systemLanguage);
-  targetLanguage = systemLanguage; // Update targetLanguage variable
-  console.log('Target language set:', targetLanguage);
-} else {
-  console.log('Target language found:', targetLanguage);
+    // Store target language in local storage
+    localStorage.setItem('targetLanguage', systemLanguage);
+    targetLanguage = systemLanguage; // Update targetLanguage variable
+    console.log('Target language set:', targetLanguage);
+  } else {
+    console.log('Target language found:', targetLanguage);
+  }
+
+  // Try to retrieve history from localStorage
+  let history = JSON.parse(localStorage.getItem('languageHistory'));
+  console.log('Language history:', history);
+
+  // If not found or empty, use default values
+  if (!history || !history.length) {
+    history = ["English", "English (street)", "Español", "Français", "Deutsch", "Italiano", "Português"];
+    localStorage.setItem('languageHistory', JSON.stringify(history));
+  }
+
+  // Set the currently selected target language
+  if (!targetLanguage || targetLanguage === 'undefined') targetLanguage = history[0];
+  document.getElementById('languageTargetText').value = targetLanguage;
+  populateSuggestions();
+}
+
+function populateSuggestions() {
+  let history = JSON.parse(localStorage.getItem('languageHistory')) || [];
+  console.log('Populating suggestions with history:', history);
+  // Clear the suggestion list
+  const suggestionDataList = document.getElementById('languageTargetSuggestions');
+  suggestionDataList.innerHTML = ''; // Clear the suggestion list
+
+  // Populate the suggestion div with the history
+  const languageTargetText = document.getElementById('languageTargetText');
+  history.forEach(lang => {
+    const option = document.createElement('option');
+    option.textContent = lang;
+    option.addEventListener('mousedown', function () {
+      console.log('Mousedown event detected for suggestion:', lang);
+      targetLanguage = lang;
+      languageTargetText.value = lang;
+      // languageTarget.blur(); // Trigger blur event to save the language
+    });
+    suggestionDataList.appendChild(option);
+  });
 }
 
 // Allow user to manually edit target language
 const languageTargetText = document.getElementById('languageTargetText');
-languageTargetText.textContent = targetLanguage;
-languageTargetText.addEventListener('click', function () {
+languageTargetText.addEventListener('focus', function () {
+  console.log('Focus event detected for target language input');
+
   languageTargetText.contentEditable = true;
   languageTargetText.focus();
 });
@@ -42,11 +85,33 @@ languageTargetText.addEventListener('keydown', function (event) {
 
 // Save target language to local storage when focus is lost
 languageTargetText.addEventListener('blur', function () {
+  console.log(`Blur event detected for target language, content: ${languageTargetText.value}`);
+
+  // Disable editing and trim the text content
   languageTargetText.contentEditable = false;
-  languageTargetText.textContent = languageTargetText.textContent.trim();
-  const newLanguage = languageTargetText.textContent;
+  languageTargetText.value = languageTargetText.value.trim();
+
+  // Save the new language to local storage
+  const newLanguage = languageTargetText.value;
   localStorage.setItem('targetLanguage', newLanguage);
+  updateLanguageHistory(newLanguage);
 });
+
+function updateLanguageHistory(newLanguage) {
+  console.log('Updating language history, new language:', newLanguage);
+
+  let history = JSON.parse(localStorage.getItem('languageHistory')) || [];
+  // Remove the language if it already exists to avoid duplicates
+  history = history.filter(lang => lang !== newLanguage);
+  // Add the new language to the start of the array
+  history.unshift(newLanguage);
+  // Ensure history does not exceed 10 items
+  history = history.slice(0, 10);
+  console.log('Updated history:', history);
+
+  localStorage.setItem('languageHistory', JSON.stringify(history));
+  populateSuggestions();
+}
 
 // Function to handle translation
 function translate() {
@@ -89,6 +154,10 @@ function translate() {
 
 // Send message to background script to get the selected text, then set the text input value
 document.addEventListener('DOMContentLoaded', function () {
+  // Initialize target language
+  initializeLanguageTarget();
+
+  // Fetch the selected text from the current tab
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { method: "getUserSelection" }, function (response) {
       // Do something with the response.data

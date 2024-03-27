@@ -42,6 +42,7 @@ body {
 }
 
 #languageTargetText {
+    width: 100px;
     cursor: pointer;
     user-select: text;
     text-decoration: underline;
