@@ -124,8 +124,14 @@ function translate() {
 
   // Check if text is not empty
   if (text) {
+    const displayInput = document.getElementById('translationInput');
+    const displayResult = document.getElementById('translationResult'); 
+    
+    // Prepare the displat
+    displayInput.textContent = text; // Display the input text
     const spinner = document.getElementById('spinnerContainer');
     spinner.style.display = 'block'; // Show the spinner
+    displayResult.textContent = ''; // Clear the result
 
     // Read target language from local storage
     let targetLanguage = localStorage.getItem('targetLanguage');
@@ -146,11 +152,12 @@ function translate() {
       .then(response => response.text())
       .then(result => {
         // Display translation result
-        document.getElementById('translationResult').textContent = result;
+        displayResult.textContent = result;
         spinner.style.display = 'none'; // Hide the spinner
       })
       .catch(error => {
         console.log('Error:', error);
+        displayResult.textContent = '#ERROR: Translation failed';
         spinner.style.display = 'none'; // Hide the spinner
       });
   }

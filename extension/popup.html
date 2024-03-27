@@ -14,16 +14,19 @@
       <button id="translateBtn">Translate</button>
     </div>
     <div id="translateOutputSection">
+      <span>Input:</span>
+      <div id="translationInput"></div>
       <div id="spinnerContainer" style="display: none;">
         <div class="spinner"></div>
       </div>
+      <span>Translation:</span>
       <div id="translationResult"></div>
     </div>
     <div id="languageTarget">
       <span id="languageTargetLabel">Translate to:</span>
       <input id="languageTargetText" list="languageTargetSuggestions" placeholder="Enter language"/>
       <datalist id="languageTargetSuggestions"></datalist>
-      <input type="reset" id="resetLanguageTarget" value="-"/>
+      <input type="reset" id="resetLanguageTarget" value="."/>
     </div>
   </div>
   <script src="popup.js"></script>
