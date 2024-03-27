@@ -2,9 +2,14 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    margin: 0px;
 }
 
 #translatePopupContainer {
+    border: 5px solid rgb(118, 218, 196);
+    margin: 0;
+    padding: 6px;
+    background-image: linear-gradient(to bottom right, rgb(229 252 255), rgb(118, 218, 196));
 }
 
 #translateInputSection {
@@ -16,7 +21,7 @@ body {
 
 #translateOutputSection {
     padding: 5px;
-    padding-top: 0;
+    font-size: 10px;
 }
 
 #textToTranslate {
@@ -30,10 +35,18 @@ body {
     margin-left: 2px;
 }
 
+#translationInput {
+    font-size: 14px;
+    padding: 5px;
+    font-weight: bold;
+    color: #1d2c33; /* Change the text color to a lighter black/grey */
+}
+
 #translationResult {
     font-size: 14px;
     padding: 5px;
     font-weight: bold;
+    color: #1d2c33; /* Change the text color to a lighter black/grey */
 }
 
 #languageTarget {
@@ -42,10 +55,15 @@ body {
 }
 
 #languageTargetText {
-    width: 100px;
+    width: 110px;
     cursor: pointer;
     user-select: text;
     text-decoration: underline;
+}
+
+#resetLanguageTarget {
+    width: 16px;
+    padding: 0;
 }
 
 .spinner {
