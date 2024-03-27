@@ -37,9 +37,16 @@ Alternatively, you can manually install it by following these steps:
 This extension is built in vanilla JavaScript, utilizing the Chrome Extensions API to interact with browser content and a background service worker for asynchronous tasks.
 Additional features and improvements might benefit from using a lightweight framework like Vue.js or React.js for more complex user interfaces.
 The extension performs calls to a light Express.js backend that serves as a proxy to the OpenAI API, which is used to interact with the GPT-3.5-turbo model.
-A valid OpenAI API key is required to deploy the backend and use the extension. The key should be stored in a `.env` file in the backend directory.
 
 ## Deployment
+
+A valid OpenAI API key is required to deploy the backend and use the extension. The key should be stored in a `.env` file in the backend directory.
+
+The `.env` file should look like this:
+
+```
+OPENAI_API_KEY='sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+```
 
 The backend's main file is located in `./backend/index.js`. To deploy the backend, run the following commands:
 
