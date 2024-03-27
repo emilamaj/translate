@@ -8,9 +8,13 @@ document.getElementById('textToTranslate').addEventListener('keydown', function 
   }
 });
 
-// Check if target language is stored in local storage
-let targetLanguage = localStorage.getItem('targetLanguage');
-console.log('Target language on open:', targetLanguage);
+// Add event listener to reset language button
+document.getElementById('resetLanguageTarget').addEventListener('click', function () {
+  const languageTargetText = document.getElementById('languageTargetText');
+  languageTargetText.value = ''; // Clear the text input
+  languageTargetText.focus(); // Focus the text input
+});
+
 // Initialize target language (new)
 function initializeLanguageTarget() {
   console.log('Initializing target language');
