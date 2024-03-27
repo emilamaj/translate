@@ -7,6 +7,7 @@ const rateLimit = require("rate-limiter-multimodal");
 const cors = require('cors');
 
 const port = 5000;
+const maxLength = 128;
 app.use(helmet());
 app.use(rateLimit({
     initialCount: 1, // 1 request
@@ -23,6 +24,20 @@ app.use(cors({
 }));
 app.use(express.json());
 
+function validateInput(req) {
+    // Validate input. Check for members and content length
+    if (!req.body.targetLanguage || !req.body.text) {
+        return 'Missing targetLanguage or text in request body';
+    }
+    if (req.body.targetLanguage.length < 2 || req.body.targetLanguage.length > 32) {
+        return 'Invalid targetLanguage length';
+    }
+    if (req.body.text.length < 1) {
+        return 'Invalid text length';
+    }
+    return null;
+}
+
 // Use multiple system messages to offer variety of answers
 const systemMessages = [
     "You are a translation assistant. Some text is provided to you and you MUST respond with a translation. When you can't or won't translate, you MUST only return the input text as is, no other comment.",
@@ -34,8 +49,11 @@ const systemMessages = [
 
 app.post('/translate', async (req, res) => {
     console.log('Request received:', req.body);
-    if (!req.body.text) {
-        res.status(400).send('Invalid text parameter');
+    // Validate input
+    const error = validateInput(req);
+    if (error) {
+        console.error('\tValidation error:', error);
+        res.status(400).send(error);
         return;
     }
 
