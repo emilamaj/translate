@@ -23,6 +23,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Use multiple system messages to offer variety of answers
 const systemMessages = [
     "You are a translation assistant. Some text is provided to you and you MUST respond with a translation. When you can't or won't translate, you MUST only return the input text as is, no other comment.",
     "You are a translation assistant. Some text is provided to you and you MUST respond with a translation.",

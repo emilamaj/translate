@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Custom Translate",
+    "name": "GPT Translate",
     "version": "1.0",
-    "description": "Translate text using a custom backend",
+    "description": "Improved text translation using GPT-3.5-turbo",
     "permissions": ["contextMenus", "activeTab"],
     "background": {
       "service_worker": "background.js"
