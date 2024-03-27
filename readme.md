@@ -6,12 +6,11 @@ GPT Translate is a Chrome extension that provides enhanced text translation capa
 
 See GPT Translate in action:
 
-- Translating from English to French, showcasing a translation of a quote by Molière.
-![Translation Example French](translate_ex_fr_molière.png)
-
-- Translating from another language to English, featuring a quote by Abraham Lincoln.
+- Translating a famous address of Abraham Lincoln into a "redneck" variant of English.
 ![Translation Example English](translate_ex_en_lincoln.png)
 
+- Translating Molière's famous quote from Le Tartuffe into a more familiar, "beauf" variant of French.
+![Translation Example French](translate_ex_fr_molière.png)
 
 ## Features
 
