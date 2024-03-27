@@ -39,7 +39,7 @@ function initializeLanguageTarget() {
 
   // If not found or empty, use default values
   if (!history || !history.length) {
-    history = ["English", "English (street)", "Español", "Français", "Deutsch", "Italiano", "Português"];
+    history = ["English", "English (street)", "Español", "Français", "Deutsch", "Italiano", "Português", "Русск$ий", "日本語", "中文"];
     localStorage.setItem('languageHistory', JSON.stringify(history));
   }
 
