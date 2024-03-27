@@ -8,6 +8,13 @@ const cors = require('cors');
 
 const port = 5000;
 const maxLength = 128;
+
+// Global error handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Unhandled internal server error');
+  });
+
 app.use(helmet());
 app.use(rateLimit({
     initialCount: 1, // 1 request
