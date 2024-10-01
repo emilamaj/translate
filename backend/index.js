@@ -55,7 +55,7 @@ const systemMessages = [
 ];
 
 app.post('/translate', async (req, res) => {
-    console.log('Request received:', req.body);
+    console.log('Request received: ', { targetLanguage: req.body.targetLanguage, text: req.body.text.substring(0, maxLength), textLengthPre: req.body.text.length });
     // Validate input
     const error = validateInput(req);
     if (error) {
@@ -67,7 +67,7 @@ app.post('/translate', async (req, res) => {
     const targetLanguage = req.body.targetLanguage.trim();
     const text = req.body.text.trim().substring(0, maxLength); // Trim and limit text length
     const apiUrl = "https://api.openai.com/v1/chat/completions";
-    const model = "gpt-3.5-turbo";
+    const model = "gpt-4o-mini";
     const selectedId = Math.floor(Math.random() * systemMessages.length);
     console.log(`\tSelected system message id: ${selectedId}`);
     const systemMessage = systemMessages[selectedId] + "\n You must translate to:\n#TARGET_LANGUAGE: " + targetLanguage;

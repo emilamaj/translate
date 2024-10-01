@@ -1,6 +1,6 @@
 # GPT Translate Chrome Extension
 
-GPT Translate is a Chrome extension that provides enhanced text translation capabilities by leveraging the power of Large Language Models (LLMs) like GPT-3.5-turbo.
+GPT Translate is a Chrome extension that provides enhanced text translation capabilities by leveraging the power of Large Language Models (LLMs) like gpt-4o-mini.
 
 ## Screenshots
 
@@ -14,7 +14,7 @@ See GPT Translate in action:
 
 ## Features
 
-- Contextual Translations: Utilizes GPT-3.5-turbo to understand the context of sentences for accurate translations, instead of using simpler translation engines like Google Translate, that often provide literal word-by-word translations.
+- Contextual Translations: Utilizes gpt-4o-mini to understand the context of sentences for accurate translations, instead of using simpler translation engines like Google Translate, that often provide literal word-by-word translations.
 - Custom Target Language: Allows users to specify their target language manually and remembers preferences. Madeup languages can be given or familiar variants of existing languages, such as "redneck English" or "
 - Selection Capture: Automatically captures selected text from the current tab for translation, reducing the need to manually copy and paste text.
 
@@ -36,7 +36,7 @@ Alternatively, you can manually install it by following these steps:
 
 This extension is built in vanilla JavaScript, utilizing the Chrome Extensions API to interact with browser content and a background service worker for asynchronous tasks.
 Additional features and improvements might benefit from using a lightweight framework like Vue.js or React.js for more complex user interfaces.
-The extension performs calls to a light Express.js backend that serves as a proxy to the OpenAI API, which is used to interact with the GPT-3.5-turbo model.
+The extension performs calls to a light Express.js backend that serves as a proxy to the OpenAI API, which is used to interact with the gpt-4o-mini model.
 
 ## Deployment
 

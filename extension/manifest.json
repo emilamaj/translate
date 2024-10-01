@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "GPT Translate",
     "version": "1.0",
-    "description": "Improved text translation using GPT-3.5-turbo",
+    "description": "Improved text translation using gpt-4o-mini",
     "permissions": ["contextMenus", "activeTab"],
     "background": {
       "service_worker": "background.js"
